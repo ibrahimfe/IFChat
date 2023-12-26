@@ -11,19 +11,19 @@ import 'package:ifchat/views/chat.dart';
 Future<User> fetchUser(String username) async {
   final response = await http.get(Uri.parse('$url/users/username/$username'));
 
-  if (response.statusCode == 200) {
-    dynamic data = json.decode(response.body)['data'];
-    if (data is List) {
-      if (data.isNotEmpty) {
-        data = data[0];
-      } else {
-        throw Exception('User tidak ditemukan! periksa kembali username anda!');
-      }
-    }
-    User users = User.fromJson(data);
-    return users;
+  if (response.statusCode == 404) {
+    throw Exception('User tidak ditemukan! periksa kembali username anda!');
   } else {
-    throw Exception('Unable to load data');
+    try {
+      dynamic data = json.decode(response.body)['data'];
+      if (data is List) {
+        data = data[0];
+      }
+      User users = User.fromJson(data);
+      return users;
+    } catch (e) {
+      throw Exception('Unable to load data');
+    }
   }
 }
 
@@ -54,13 +54,14 @@ Future<void> loginUser(
       );
       popUp('Selamat datang, $username!');
     } else {
+      Navigator.pop(context);
       popUp('User atau Password yang di inputkan salah!');
     }
 
     // Navigator.pop(loginContext);
   } catch (e) {
     Navigator.pop(context);
-    popUp('error $e');
+    popUp('$e');
   }
 }
 

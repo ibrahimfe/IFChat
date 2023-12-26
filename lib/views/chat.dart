@@ -49,8 +49,8 @@ class _ChatPageState extends State<ChatPage> {
 
   void sendMessage() async {
     String messageText = _textEditingController.text.trim();
-    String senderName =
-        'YourSenderName'; // You need to replace this with the actual sender's name
+    String senderName = 'anonymous';
+    // Replace _yourTextEditingController with the actual TextEditingController instance
 
     if (messageText.isNotEmpty) {
       try {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String url = 'https://arfannurali.me/api';
+String url = 'http://127.0.0.1:8000/api';
 
 void showLoadingIndicator(BuildContext context, String message) {
   showDialog(
